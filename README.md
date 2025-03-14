@@ -1,6 +1,8 @@
+$${\color{red}This\ is\ still\ in\ dev\!\ Please\ stand\ by\!}$$
+
 # About the fork
 This is a fork of sebo-b/warp with added OpenID Connect (OIDC)
-<span style="color: red;">Still in dev! Please stand by!</span>
+
 
 # Announcement
 
