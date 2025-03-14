@@ -1,5 +1,6 @@
 # About the fork
-This is a sebo-b/warp with added OpenID Connect (OIDC)
+This is a fork of sebo-b/warp with added OpenID Connect (OIDC)
+<span style="color: red;">Still in dev! Please stand by!</span>
 
 # Announcement
 
