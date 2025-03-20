@@ -54,6 +54,7 @@ warpGlobals.i18n.tabulatorLangs = {
 warpGlobals.i18n.phrases = {
     btn: {
         "Login": "Connexion",
+        "LoginAgain": "Se reconnecter",
         "Add": "Ajouter",
         "Cancel": "Annuler",
         "Delete": "Effacer",
@@ -211,4 +212,9 @@ warpGlobals.i18n.phrases = {
         "Plus d'une ligne est sélectionnée. Le rapport sera limité à ce nombre de lignes.||||"+
         "Plus de %{smart_count} lignes sont sélectionnées. Le rapport sera limité à ce nombre de lignes..",
     "Add to group": "Ajouter au groupe",
+    "You have been logged out!": "Vous avez été déconnecté !",
+    "Click button below to login again.": "Cliquez sur le bouton ci-dessous pour vous reconnecter.",
+    "USER": "UTILISATEUR",
+    "IS NOT ALLOWED TO LOGIN!": "L'ACCÈS EST REFUSÉ !",
+    "In case you want to try again use the button below": "Si vous voulez réessayer, utilisez le bouton ci-dessous",
 };

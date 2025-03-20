@@ -54,6 +54,7 @@ warpGlobals.i18n.tabulatorLangs = {
 warpGlobals.i18n.phrases = {
     btn: {
         "Login": "Iniciar sesión",
+        "LoginAgain": "Iniciar sesión de nuevo",
         "Add": "Agregar",
         "Cancel": "Cancelar",
         "Delete": "Borrar",
@@ -211,4 +212,9 @@ warpGlobals.i18n.phrases = {
         "Se seleccionaron más de una fila. El informe se limitará a ese número de filas.||||"+
         "Se seleccionaron {smart_count} filas. El informe se limitará a ese número de filas.",
     "Add to group": "Agregar al grupo",
+    "You have been logged out!": "¡Has cerrado sesión!",
+    "Click button below to login again.": "Haz clic en el botón de abajo para iniciar sesión de nuevo.",
+    "USER": "¡USUARIO",
+    "IS NOT ALLOWED TO LOGIN!": "NO TIENE PERMITIDO INICIAR SESIÓN!",
+    "In case you want to try again use the button below": "Si desea intentarlo de nuevo, use el botón de abajo",
 };

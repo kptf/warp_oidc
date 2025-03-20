@@ -54,6 +54,7 @@ warpGlobals.i18n.tabulatorLangs = {
 warpGlobals.i18n.phrases = {
     btn: {
         "Login": "Login",
+        "LoginAgain": "Erneut einloggen",
         "Add": "Hinzufügen",
         "Cancel": "Abbrechen",
         "Delete": "Löschen",
@@ -213,4 +214,9 @@ warpGlobals.i18n.phrases = {
         "Es wurde mehr als eine Zeile ausgewählt. Der Bericht wird auf diese Anzahl von Zeilen beschränkt.||||"+
         "Es sind mehr als %{smart_count} Zeilen ausgewählt. Der Bericht wird auf diese Anzahl von Zeilen beschränkt.",
     "Add to group": "Zur Gruppe hinzufügen",
+    "You have been logged out!": "Sie wurden ausgeloggt!",
+    "Click button below to login again.": "Unten klicken um sich wieder anzumelden!",
+    "USER": "BENUTZER",
+    "IS NOT ALLOWED TO LOGIN!": "IST DIE ANMELDUNG UNTERSAGT!",
+    "In case you want to try again use the button below": "Falls Sie es erneut versuchen möchten, nutzen Sie den untenstehenden Button",
 };
