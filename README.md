@@ -1,7 +1,68 @@
-$${\color{red}This\ is\ still\ in\ dev\!\ Please\ stand\ by\!}$$
-
 # About the fork
-This is a fork of sebo-b/warp with added OpenID Connect (OIDC)
+This is a fork of [sebo-b/warp](https://github.com/sebo-b/warp) with added OpenID Connect (OIDC). A huge shoutout to all participating in this original repo! Wrap really is a great project!
+
+
+
+## Made Adaptions
+
+Basically the added OIDC authentication is fully based on the original `warp/auth_ldap.py`. It was also tried to keep and map all the respective config vars like `AUTH_LDAP`, `LDAP_USER_NAME_ATTRIBUTE` etc. for the OIDC context. Here are the available config vars for OIDC:
+
+- [bool] `AUTH_OIDC`: **False** | True
+  *If true, OIDC auth is enabled*
+- [bool] `OIDC_SHOW_LOGIN_BUTTON`: True|**False**
+  *If true, a page with a login button is showed, if false, OIDC auth starts right away*
+- [str] `OIDC_TYPE`: **generic**|microsoft
+  *Only the use of "microsoft" is currently tested!*
+- [str] `OIDC_TENANT_ID`: **None**
+  *In case of `OIDC_TYPE=microsoft`, you can provide your tenant id here directly; so no need for setting `OIDC_DISCOVERY_URL`*
+- [str, required] `OIDC_CLIENT_ID`
+  *Your OIDC client id*
+- [str, required] `OIDC_CLIENT_SECRET`
+  *Your OIDC client secret*
+- [str] `OIDC_DISCOVERY_URL`: **None**
+  *Your OIDC provider's discovery url, in case of microsoft e.g. "https://login.microsoftonline.com/your_tenant_id/v2.0/.well-known/openid-configuration"; in case you set `OIDC_TYPE=microsoft`, it's enough to set `OIDC_TENANT_ID`*
+- [str, required] `OIDC_REDIRECT_URI`
+  *Your callback uri which is also set at your oidc provider; e.g. {your page root here e.g. http://localhost:5000}/oidc/callback*
+- [str] `OIDC_SCOPE`: **openid email profile**
+  *Your OIDC scope; defines which data attributes are passed by your oidc provider*
+- [str] `OIDC_USER_NAME_ATTRIBUTE`: **email**
+  *Attribute used for the user's login in wrap*
+- [str] `OIDC_NAME_ATTRIBUTE`: **name**
+  *Attribute used for the user's name in wrap*
+- [list] `OIDC_EXCLUDED_USERS`: **[]**
+  *List of users that bypass oidc login (e.g. "admin") they can use the route /login-non-oidc*
+- [list (of lists)] `OIDC_GROUP_MAP`: **[ [null,null] ]**
+  *Works the same as the original `LDAP_GROUP_MAP`; requires "groups" in scope to work!*
+- [list] `OIDC_GROUPS_ADMIN_USERS`: **[]**
+  *List of passed oidc groups that are automatically made admin; requires "groups" in scope to work!*
+- [bool] `OIDC_GROUP_STRICT_MAPPING`: **True** | False
+  *Works the same as the original `LDAP_GROUP_STRICT_MAPPING` but default is true*
+
+
+
+## Hints to setup OIDC at your OIDC provider
+
+In case you need help setting up OIDC at your provider, I can warmly recommend looking at the bookstack documentations; at least this was what I did, some links to get an idea:
+
+- Generals: https://www.bookstackapp.com/docs/admin/oidc-auth/
+- Microsoft Tenant Setup: https://foss.video/w/n67qNijhf8BdTRQys8SDYf
+  (just take the params you see in the video and set them to the above config vars; also this video gives instructions for the "groups" claim)
+
+
+
+
+
+
+
+
+
+<what follows is the original README content>
+
+
+
+
+
+
 
 
 # Announcement
