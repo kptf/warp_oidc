@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    {{ super() }}
+
+    <style>
+        html, body, form {
+            height: 100%;
+            width: 100%;
+        }
+        .login_container {
+            margin: auto;
+            width: 300px;
+            height: 70%;
+        }
+        .flash_message {
+          color: #F44336;
+          padding-bottom: 20px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+  {{ super() }}
+
+    <nav>
+        <div class="nav-wrapper">
+            <div class="center"><img class="logo" src="{{ url_for('static', filename='images/logo.png') }}"></div>
+        </div>
+    </nav>
+
+
+    <form action="{{ url_for('auth.login') }}" method="get">
+
+    <div class="login_container valign-wrapper">
+      <div class="row center-align ">
+
+        <p class="TR">You have been logged out!</p>
+        <p class="TR">Click button below to login again.</p>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+            <div class="col s12">
+              <div class="flash_message">{{ message }}</div>
+            </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <div class="col s12">
+          <button class="btn waves-effect waves-light TR" type="submit" name="submit">btn.LoginAgain</button>
+        </div>
+
+      </div>
+    </div>
+
+  </form>
+
+{% endblock %}
