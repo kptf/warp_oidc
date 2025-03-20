@@ -7,36 +7,95 @@ This is a fork of [sebo-b/warp](https://github.com/sebo-b/warp) with added OpenI
 
 Basically the added OIDC authentication is fully based on the original `warp/auth_ldap.py`. It was also tried to keep and map all the respective config vars like `AUTH_LDAP`, `LDAP_USER_NAME_ATTRIBUTE` etc. for the OIDC context. Here are the available config vars for OIDC:
 
-- [bool] `AUTH_OIDC`: **False** | True
-  *If true, OIDC auth is enabled*
-- [bool] `OIDC_SHOW_LOGIN_BUTTON`: True|**False**
-  *If true, a page with a login button is showed, if false, OIDC auth starts right away*
-- [str] `OIDC_TYPE`: **generic**|microsoft
-  *Only the use of "microsoft" is currently tested!*
-- [str] `OIDC_TENANT_ID`: **None**
-  *In case of `OIDC_TYPE=microsoft`, you can provide your tenant id here directly; so no need for setting `OIDC_DISCOVERY_URL`*
-- [str, required] `OIDC_CLIENT_ID`
-  *Your OIDC client id*
-- [str, required] `OIDC_CLIENT_SECRET`
-  *Your OIDC client secret*
-- [str] `OIDC_DISCOVERY_URL`: **None**
-  *Your OIDC provider's discovery url, in case of microsoft e.g. "https://login.microsoftonline.com/your_tenant_id/v2.0/.well-known/openid-configuration"; in case you set `OIDC_TYPE=microsoft`, it's enough to set `OIDC_TENANT_ID`*
-- [str, required] `OIDC_REDIRECT_URI`
-  *Your callback uri which is also set at your oidc provider; e.g. {your page root here e.g. http://localhost:5000}/oidc/callback*
-- [str] `OIDC_SCOPE`: **openid email profile**
-  *Your OIDC scope; defines which data attributes are passed by your oidc provider*
-- [str] `OIDC_USER_NAME_ATTRIBUTE`: **email**
-  *Attribute used for the user's login in wrap*
-- [str] `OIDC_NAME_ATTRIBUTE`: **name**
-  *Attribute used for the user's name in wrap*
-- [list] `OIDC_EXCLUDED_USERS`: **[]**
-  *List of users that bypass oidc login (e.g. "admin") they can use the route /login-non-oidc*
-- [list (of lists)] `OIDC_GROUP_MAP`: **[ [null,null] ]**
-  *Works the same as the original `LDAP_GROUP_MAP`; requires "groups" in scope to work!*
-- [list] `OIDC_GROUPS_ADMIN_USERS`: **[]**
-  *List of passed oidc groups that are automatically made admin; requires "groups" in scope to work!*
-- [bool] `OIDC_GROUP_STRICT_MAPPING`: **True** | False
-  *Works the same as the original `LDAP_GROUP_STRICT_MAPPING` but default is true*
+| variable: | `AUTH_OIDC` |
+| :--- | :--- |
+| type: | `boolean` |
+| default value: | `False` |
+| description: | If `True`, OIDC authentication is enabled. |
+
+| variable: | `OIDC_SHOW_LOGIN_BUTTON` |
+| :--- | :--- |
+| type: | `boolean` |
+| default value: | `False` |
+| description: | If `True`, a page with a login button is shown; if `False`, OIDC authentication starts immediately. |
+
+| variable: | `OIDC_TYPE` |
+| :--- | :--- |
+| type: | `string` |
+| default value: | `"generic"` |
+| description: | Defines the OIDC provider type. Only `"microsoft"` is currently tested. |
+
+| variable: | `OIDC_TENANT_ID` |
+| :--- | :--- |
+| type: | `string` |
+| default value: | `None` |
+| description: | If `OIDC_TYPE="microsoft"`, this specifies the tenant ID, eliminating the need for `OIDC_DISCOVERY_URL`. |
+
+| variable: | `OIDC_CLIENT_ID` |
+| :--- | :--- |
+| type: | `string` |
+| required: | ✅ |
+| description: | The OIDC client ID. |
+
+| variable: | `OIDC_CLIENT_SECRET` |
+| :--- | :--- |
+| type: | `string` |
+| required: | ✅ |
+| description: | The OIDC client secret. |
+
+| variable: | `OIDC_DISCOVERY_URL` |
+| :--- | :--- |
+| type: | `string` |
+| default value: | `None` |
+| description: | The OIDC provider's discovery URL. For Microsoft, this follows the format: `https://login.microsoftonline.com/your_tenant_id/v2.0/.well-known/openid-configuration`. If `OIDC_TYPE="microsoft"`, setting `OIDC_TENANT_ID` is sufficient. |
+
+| variable: | `OIDC_REDIRECT_URI` |
+| :--- | :--- |
+| type: | `string` |
+| required: | ✅ |
+| description: | The callback URI registered with the OIDC provider, e.g., `{your page root}/oidc/callback`. |
+
+| variable: | `OIDC_SCOPE` |
+| :--- | :--- |
+| type: | `string` |
+| default value: | `"openid email profile"` |
+| description: | Defines the OIDC scope and specifies which attributes are passed by the OIDC provider. |
+
+| variable: | `OIDC_USER_NAME_ATTRIBUTE` |
+| :--- | :--- |
+| type: | `string` |
+| default value: | `"email"` |
+| description: | Attribute used for the user's login in wrap. |
+
+| variable: | `OIDC_NAME_ATTRIBUTE` |
+| :--- | :--- |
+| type: | `string` |
+| default value: | `"name"` |
+| description: | Attribute used for the user's name in wrap. |
+
+| variable: | `OIDC_EXCLUDED_USERS` |
+| :--- | :--- |
+| type: | `list` |
+| default value: | `[]` |
+| description: | List of users who bypass OIDC login (e.g., `"admin"`). They can use the `/login-non-oidc` route. |
+
+| variable: | `OIDC_GROUP_MAP` |
+| :--- | :--- |
+| type: | `list of lists` |
+| default value: | `[[null, null]]` |
+| description: | Functions similarly to `LDAP_GROUP_MAP`. Requires `"groups"` in the OIDC (provider's) scope. |
+
+| variable: | `OIDC_GROUPS_ADMIN_USERS` |
+| :--- | :--- |
+| type: | `list` |
+| default value: | `[]` |
+| description: | List of OIDC groups that are automatically granted admin privileges. Requires `"groups"` in OIDC (provider's) scope. |
+
+| variable: | `OIDC_GROUP_STRICT_MAPPING` |
+| :--- | :--- |
+| type: | `boolean` |
+| default value: | `True` |
+| description: | Works like `LDAP_GROUP_STRICT_MAPPING`, but defaults to `True`. |
 
 
 
@@ -55,8 +114,7 @@ In case you need help setting up OIDC at your provider, I can warmly recommend l
 
 
 
-
-<what follows is the original README content>
+$${\color{red}what\ follows\ is\ the\ original\ README\ content}$$
 
 
 
