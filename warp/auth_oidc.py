@@ -1,5 +1,7 @@
 # fully based on auth_ldap.py! I adapted it for oidc!
 import os
+from urllib.parse import urlparse
+
 import flask
 from warp.db import *
 import warp.auth
@@ -229,6 +231,11 @@ def login():
 
     # check for non-oidc login
     referrer = request.referrer
+    host_url = request.host_url
+    base_url = request.base_url
+    oidc_callback_uri = flask.current_app.config["OIDC_REDIRECT_URI"]
+    parsed_oidc_callback_uri = urlparse(oidc_callback_uri)
+    oidc_callback_host_url = f"{parsed_oidc_callback_uri.scheme}://{parsed_oidc_callback_uri.netloc}/"
     u = flask.request.form.get('login')
 
     # checks if a non-oidc user want to log in and in that case pass it on to the original auth.login()
@@ -244,6 +251,11 @@ def login():
         if flask.current_app.config.get('OIDC_SHOW_LOGIN_BUTTON', False):
             if referrer is None or (not referrer.endswith('/logout') and not referrer.endswith('/login')):
                 return flask.render_template('login_oidc.html')
+
+    if not host_url.lower() == oidc_callback_host_url.lower():
+        redirect_url = base_url.replace(host_url, oidc_callback_host_url)
+        print(f'REDIRECTING USER FROM {base_url} TO {redirect_url} TO MATCH CONFIGURED OIDC CALLBACK DOMAIN {oidc_callback_host_url}  => RE-LOGIN REQUIRED BUT PREVENTS ERROR 502 BAD GATEWAY')
+        return flask.redirect(redirect_url)
 
     # clear session to force re-login
     flask.session.clear()
