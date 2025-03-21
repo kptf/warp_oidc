@@ -229,17 +229,21 @@ def oidc_login(user_data):
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
 
-    # check for non-oidc login
+    # check for non-oidc login and correct domain for oidc callback
+    http_method = request.method
     referrer = request.referrer
     host_url = request.host_url
-    base_url = request.base_url
+    parsed_host_url = urlparse(host_url)
+    host = parsed_host_url.netloc
     oidc_callback_uri = flask.current_app.config["OIDC_REDIRECT_URI"]
     parsed_oidc_callback_uri = urlparse(oidc_callback_uri)
-    oidc_callback_host_url = f"{parsed_oidc_callback_uri.scheme}://{parsed_oidc_callback_uri.netloc}/"
+    oidc_callback_host = parsed_oidc_callback_uri.netloc
+
+    # get eventually passed user from non-oidc login
     u = flask.request.form.get('login')
 
     # checks if a non-oidc user want to log in and in that case pass it on to the original auth.login()
-    if not u is None or (not referrer is None and referrer.endswith('/login-non-oidc')):
+    if http_method == "POST" and not u is None or (not referrer is None and referrer.endswith('/login-non-oidc')):
         oidc_excluded_users = flask.current_app.config.get('OIDC_EXCLUDED_USERS', [])
         if u in oidc_excluded_users:
             return warp.auth.login()
@@ -248,13 +252,14 @@ def login():
             return flask.render_template('login.html')
     else:
         # check if a login button page is configured to be shown; is skipped in case of respective redirects etc.
-        if flask.current_app.config.get('OIDC_SHOW_LOGIN_BUTTON', False):
+        if http_method == "GET" and flask.current_app.config.get('OIDC_SHOW_LOGIN_BUTTON', False):
             if referrer is None or (not referrer.endswith('/logout') and not referrer.endswith('/login')):
                 return flask.render_template('login_oidc.html')
 
-    if not host_url.lower() == oidc_callback_host_url.lower():
-        redirect_url = base_url.replace(host_url, oidc_callback_host_url)
-        print(f'REDIRECTING USER FROM {base_url} TO {redirect_url} TO MATCH CONFIGURED OIDC CALLBACK DOMAIN {oidc_callback_host_url}  => RE-LOGIN REQUIRED BUT PREVENTS ERROR 502 BAD GATEWAY')
+    if not host.lower() == oidc_callback_host.lower():
+        base_url = request.base_url
+        redirect_url = base_url.replace(host, oidc_callback_host)
+        print(f'REDIRECTING USER FROM {base_url} TO {redirect_url} TO MATCH CONFIGURED OIDC CALLBACK DOMAIN OF CALLBACK URL {oidc_callback_uri}  => RE-LOGIN REQUIRED BUT PREVENTS ERROR 502 BAD GATEWAY')
         return flask.redirect(redirect_url)
 
     # clear session to force re-login
