@@ -72,8 +72,10 @@ def zone(zid):
         flask.abort(403)
 
     nextWeek = utils.getNextWeek()
+    default_booking_start = int(flask.current_app.config.get('DEFAULT_BOOKING_START', 9))
+    default_booking_end = int(flask.current_app.config.get('DEFAULT_BOOKING_END', 17))
     defaultSelectedDates = {
-        "slider": [9*3600, 17*3600]
+        "slider": [default_booking_start*3600, default_booking_end*3600]
     }
 
     for d in nextWeek[1:]:

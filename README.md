@@ -111,6 +111,22 @@ In case you need help setting up OIDC at your provider, I can warmly recommend l
 
 
 
+## Further non-OIDC Adaptions
+
+Due to a requirement I at our company, I added two config variables to set the default proposed booking times (slider on the left) via env vars:
+
+| variable:      | `DEFAULT_BOOKING_START`                              |
+| :------------- | :--------------------------------------------------- |
+| type:          | `float`                                              |
+| default value: | `9.0`                                                |
+| description:   | Default start time for bookings (slider on the left) |
+
+| variable:      | `DEFAULT_BOOKING_END`                              |
+| :------------- | :------------------------------------------------- |
+| type:          | `float`                                            |
+| default value: | `17.0`                                             |
+| description:   | Default end time for bookings (slider on the left) |
+
 
 
 
