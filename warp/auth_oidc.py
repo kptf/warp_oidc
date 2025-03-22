@@ -1,7 +1,7 @@
 # fully based on auth_ldap.py! I adapted it for oidc!
 import os
 from urllib.parse import urlparse
-
+from peewee import fn
 import flask
 from warp.db import *
 import warp.auth
@@ -100,7 +100,7 @@ def oidc_apply_user_login_data(login_data):
         # check user's group assignment
         existing_groups = Users.select( Users.login ) \
             .where( Users.account_type == ACCOUNT_TYPE_GROUP ) \
-            .where( Users.login.in_(groups) ) \
+            .where(fn.LOWER(Users.login).in_([g.lower() for g in groups])) \
             .tuples()
         existing_groups = [i[0] for i in existing_groups]
 
