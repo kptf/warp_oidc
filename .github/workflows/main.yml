@@ -15,9 +15,8 @@ jobs:
       id: build_docker_image
       run: |
         DOCKER_BUILDKIT=1 docker build -f Dockerfile -t ghcr.io/${{ github.repository_owner }}/warp_oidc:latest .
-        docker run -d -p 5000:5000 --name warp_oidc warp_oidc:latest
+        docker run -d -p 5000:5000 --name warp_oidc ghcr.io/${{ github.repository_owner }}/warp_oidc:latest
         sleep 10
-        docker rm -f warp_oidc
 
     - name: Checkout Repository
       uses: actions/checkout@v4
