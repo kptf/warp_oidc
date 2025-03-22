@@ -1,5 +1,11 @@
 # About the fork
-This is a fork of [sebo-b/warp](https://github.com/sebo-b/warp) with added OpenID Connect (OIDC). A huge shoutout to all participating in this original repo! Wrap really is a great project!
+This is a fork of [sebo-b/warp](https://github.com/sebo-b/warp) with added OpenID Connect (OIDC). A huge shoutout to all participating in this original repo! WARP really is a great project!
+
+This repo here also features the `warp_oidc` docker image, so no need to build manually. Just use it in your compose file or pull it via:
+
+```bash
+docker pull ghcr.io/kptf/warp_oidc:latest
+```
 
 
 
@@ -65,13 +71,13 @@ Basically the added OIDC authentication is fully based on the original `warp/aut
 | :--- | :--- |
 | type: | `string` |
 | default value: | `"email"` |
-| description: | Attribute used for the user's login in wrap. |
+| description: | Attribute used for the user's login in warp. |
 
 | variable: | `OIDC_NAME_ATTRIBUTE` |
 | :--- | :--- |
 | type: | `string` |
 | default value: | `"name"` |
-| description: | Attribute used for the user's name in wrap. |
+| description: | Attribute used for the user's name in warp. |
 
 | variable: | `OIDC_EXCLUDED_USERS` |
 | :--- | :--- |
