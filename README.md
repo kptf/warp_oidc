@@ -111,9 +111,16 @@ In case you need help setting up OIDC at your provider, I can warmly recommend l
 
 - Generals: https://www.bookstackapp.com/docs/admin/oidc-auth/
 - Microsoft Tenant Setup: https://foss.video/w/n67qNijhf8BdTRQys8SDYf
-  (just take the params you see in the video and set them to the above config vars; also this video gives instructions for the "groups" claim)
-
-
+  (just take the params you see in the video and set them to the above config vars; also this video gives instructions for the "groups" claim; for a quick entry, see the list below)
+  1. Login to Microsoft Entra admin center
+  2. Go to Applications > App registrations
+  3. Click [+ New registration]
+  4. Give it a name and set your callback url, i.e. `{protocol}://{host}/oidc/callback` (for dev, you can use `http:localhost` for `{protocol}://{host}`, otherwise Microsoft enforces the use of https!)
+  5. Look at the details in the "Overview", here you can find your *Application (client) ID* (= `OIDC_CLIENT_ID`) and *Directory (tenant) ID* (=  `OIDC_TENANT_ID`). If you want to set the `OIDC_DISCOVERY_URL` explicitly, you can find that under the top button [🌍 Endpoints] > *OpenID Connect metadata document*
+  6. Click [Certificates & secrets] > [+ New client secret] and give it a name, e.g. *OIDC Secret*
+  7. The *Value* displayed afterwards is your client secret (= `OIDC_CLIENT_SECRET`). **COPY IT IMMEDIATELY, IT WELL BE INVISIBLE AFTER LEAVING THE PAGE!**
+  8. Click [API permissions] > [+ Add a permission] > Microsoft Graph > Delegated permissions > OpenId permissions => ☑️ email, ☑️ openid, ☑️ profile (or whatever you need and like, depending on your `OIDC_(USER_)NAME_ATTRIBUTE` setting) > [Add permissions]
+  9. If you want to pass users' groups as well: Click [Token configuration] > [+ Add groups claim] and check the respective groups you want to pass (you can choose *All groups*, but usually passing *Security groups* should be enough.) Also note the pull downs below; here you can set if the groups' *Group ID* (i.e. their object id), *sAMAccountName* etc. should be passed (this is what then has be referred to in your `OIDC_GROUP_MAP` setting) > [Add]
 
 
 
