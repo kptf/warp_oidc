@@ -21,7 +21,7 @@ def create_app():
     from . import public
     if 'IMPRINT_URL' in app.config and not app.config['IMPRINT_URL'] == "/imprint":
         public.bp.route(app.config['IMPRINT_URL'])(public.imprint)
-    if 'DATA_PRIVACY_URL' in app.config and not not app.config['IMPRINT_URL'] == "/privacy":
+    if 'DATA_PRIVACY_URL' in app.config and not app.config['DATA_PRIVACY_URL'] == "/privacy":
         public.bp.route(app.config['DATA_PRIVACY_URL'])(public.data_privacy)
     app.register_blueprint(public.bp)
 
