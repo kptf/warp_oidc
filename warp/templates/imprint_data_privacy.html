@@ -1,0 +1,13 @@
+{% if (display_imprint is defined and display_imprint) or (display_data_privacy is defined and display_data_privacy) %}
+    <div class="row center-align">
+        {% if display_imprint is defined and display_imprint %}
+            <a href="{{ url_for("public.imprint") }}" target="_blank" class="TR">Imprint</a>
+        {% endif %}
+        {% if display_imprint is defined and display_imprint and display_data_privacy is defined and display_data_privacy %}
+            |
+        {% endif %}
+        {% if display_data_privacy is defined and display_data_privacy %}
+            <a href="{{ url_for("public.data_privacy") }}" target="_blank" class="TR">Privacy Notice</a>
+        {% endif %}
+    </div>
+{% endif %}

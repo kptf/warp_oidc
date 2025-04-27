@@ -217,4 +217,6 @@ warpGlobals.i18n.phrases = {
     "USER": "UTILISATEUR",
     "IS NOT ALLOWED TO LOGIN!": "L'ACCÈS EST REFUSÉ !",
     "In case you want to try again use the button below": "Si vous voulez réessayer, utilisez le bouton ci-dessous",
+    "Imprint": "Mentions légales",
+    "Privacy Notice": "Avis de confidentialité"
 };

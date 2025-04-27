@@ -17,6 +17,14 @@ def create_app():
     from . import xhr
     app.register_blueprint(xhr.bp, url_prefix='/xhr')
 
+    # import of public routes + language / regulatory specific routes for imprint and data-privacy
+    from . import public
+    if 'IMPRINT_URL' in app.config and not app.config['IMPRINT_URL'] == "/imprint":
+        public.bp.route(app.config['IMPRINT_URL'])(public.imprint)
+    if 'DATA_PRIVACY_URL' in app.config and not not app.config['IMPRINT_URL'] == "/privacy":
+        public.bp.route(app.config['DATA_PRIVACY_URL'])(public.data_privacy)
+    app.register_blueprint(public.bp)
+
     from . import auth
     from . import auth_mellon
     from . import auth_ldap

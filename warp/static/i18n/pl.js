@@ -224,4 +224,6 @@ warpGlobals.i18n.phrases = {
     "USER": "UŻYTKOWNIK",
     "IS NOT ALLOWED TO LOGIN!": "NIE MASZ UPRAWNIEŃ DO LOGOWANIA!",
     "In case you want to try again use the button below": "Jeśli chcesz spróbować ponownie, użyj przycisku poniżej",
+    "Imprint": "Impressum",
+    "Privacy Notice": "Powiadomienie o prywatności"
 };

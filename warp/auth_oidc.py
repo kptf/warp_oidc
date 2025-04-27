@@ -224,7 +224,6 @@ def oidc_login(user_data):
     return login_allowed, login_error, login_data
 
 
-
 # adapted from the original login function
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -239,6 +238,10 @@ def login():
     parsed_oidc_callback_uri = urlparse(oidc_callback_uri)
     oidc_callback_host = parsed_oidc_callback_uri.netloc
 
+    # check for imprint and data privacy urls
+    display_imprint = flask.current_app.config.get('DISPLAY_IMPRINT')
+    display_data_privacy = flask.current_app.config.get('DISPLAY_DATA_PRIVACY')
+
     # get eventually passed user from non-oidc login
     u = flask.request.form.get('login')
 
@@ -249,12 +252,13 @@ def login():
             return warp.auth.login()
         else:
             flask.flash(f'User {u} is not allowed to log in!', 'danger')
-            return flask.render_template('login.html')
+
+            return flask.render_template('login.html', display_imprint=display_imprint, display_data_privacy=display_data_privacy)
     else:
         # check if a login button page is configured to be shown; is skipped in case of respective redirects etc.
         if http_method == "GET" and flask.current_app.config.get('OIDC_SHOW_LOGIN_BUTTON', False):
             if referrer is None or (not referrer.endswith('/logout') and not referrer.endswith('/login')):
-                return flask.render_template('login_oidc.html')
+                return flask.render_template('login_oidc.html', display_imprint=display_imprint, display_data_privacy=display_data_privacy)
 
     if not host.lower() == oidc_callback_host.lower():
         base_url = request.base_url

@@ -219,4 +219,6 @@ warpGlobals.i18n.phrases = {
     "USER": "BENUTZER",
     "IS NOT ALLOWED TO LOGIN!": "IST DIE ANMELDUNG UNTERSAGT!",
     "In case you want to try again use the button below": "Falls Sie es erneut versuchen möchten, nutzen Sie den untenstehenden Button",
+    "Imprint": "Impressum",
+    "Privacy Notice": "Datenschutz",
 };

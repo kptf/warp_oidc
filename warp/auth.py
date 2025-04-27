@@ -45,7 +45,10 @@ def login():
         else:
             flask.flash("Wrong username or password")
 
-    return flask.render_template('login.html')
+    # check for imprint and data privacy urls
+    display_imprint = flask.current_app.config.get('DISPLAY_IMPRINT')
+    display_data_privacy = flask.current_app.config.get('DISPLAY_DATA_PRIVACY')
+    return flask.render_template('login.html', display_imprint=display_imprint, display_data_privacy=display_data_privacy)
 
 bp.route('/login', methods=['GET', 'POST'])(login)
 
@@ -61,6 +64,10 @@ def session():
         return
 
     if flask.request.endpoint == 'static':
+        return
+
+    # added to make routes in public work without login
+    if flask.request.blueprint == 'public':
         return
 
     login = flask.session.get('login')

@@ -217,4 +217,6 @@ warpGlobals.i18n.phrases = {
     "USER": "¡USUARIO",
     "IS NOT ALLOWED TO LOGIN!": "NO TIENE PERMITIDO INICIAR SESIÓN!",
     "In case you want to try again use the button below": "Si desea intentarlo de nuevo, use el botón de abajo",
+    "Imprint": "Aviso legal",
+    "Privacy Notice": "Aviso de privacidad",
 };

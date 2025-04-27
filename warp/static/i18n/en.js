@@ -219,4 +219,6 @@ warpGlobals.i18n.phrases = {
     "USER": "USER",
     "IS NOT ALLOWED TO LOGIN!": "IS NOT ALLOWED TO LOGIN!",
     "In case you want to try again use the button below": "In case you want to try again use the button below",
+    "Imprint": "Imprint",
+    "Privacy Notice": "Privacy Notice",
 };

@@ -140,7 +140,41 @@ Due to a requirement I at our company, I added two config variables to set the d
 | default value: | `17.0`                                             |
 | description:   | Default end time for bookings (slider on the left) |
 
+| variable:      | `DISPLAY_IMPRINT`                                                      |
+| :------------- |:-----------------------------------------------------------------------|
+| type:          | `bool`                                                                 |
+| default value: | `False`                                                                |
+| description:   | Controls whether the imprint link is displayed (at the login page(s))  |
 
+| variable:      | `IMPRINT_URL`                                                |
+| :------------- | :----------------------------------------------------------- |
+| type:          | `str`                                                        |
+| default value: | `None`                                                       |
+| description:   | URL path for the imprint page e.g. `/impressum` (route `/imprint` is always available) |
+
+| variable:      | `IMPRINT_REDIRECT_URL`                                       |
+| :------------- | :----------------------------------------------------------- |
+| type:          | `str`                                                        |
+| default value: | `None`                                                       |
+| description:   | Full URL for imprint redirection to your (company's) imprint page |
+
+| variable:      | `DISPLAY_DATA_PRIVACY`                                                     |
+| :------------- |:---------------------------------------------------------------------------|
+| type:          | `bool`                                                                     |
+| default value: | `False`                                                                    |
+| description:   | Controls whether the data privacy link is displayed (at the login page(s)) |
+
+| variable:      | `DATA_PRIVACY_URL`                                                                            |
+| :------------- |:----------------------------------------------------------------------------------------------|
+| type:          | `str`                                                                                         |
+| default value: | `None`                                                                                        |
+| description:   | URL path for the data privacy page e.g. `/datenschutz` (route `/privacy` is always available) |
+
+| variable:      | `DATA_PRIVACY_REDIRECT_URL`                                  |
+| :------------- | :----------------------------------------------------------- |
+| type:          | `str`                                                        |
+| default value: | `None`                                                       |
+| description:   | Full URL for data privacy redirection to your (company's) data privacy page |
 
 
 $${\color{red}what\ follows\ is\ the\ original\ README\ content}$$
