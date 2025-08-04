@@ -121,6 +121,7 @@ In case you need help setting up OIDC at your provider, I can warmly recommend l
   7. The *Value* displayed afterwards is your client secret (= `OIDC_CLIENT_SECRET`). **COPY IT IMMEDIATELY, IT WELL BE INVISIBLE AFTER LEAVING THE PAGE!**
   8. Click [API permissions] > [+ Add a permission] > Microsoft Graph > Delegated permissions > OpenId permissions => ☑️ email, ☑️ openid, ☑️ profile (or whatever you need and like, depending on your `OIDC_(USER_)NAME_ATTRIBUTE` setting) > [Add permissions]
   9. If you want to pass users' groups as well: Click [Token configuration] > [+ Add groups claim] and check the respective groups you want to pass (you can choose *All groups*, but usually passing *Security groups* should be enough.) Also note the pull downs below; here you can set if the groups' *Group ID* (i.e. their object id), *sAMAccountName* etc. should be passed (this is what then has be referred to in your `OIDC_GROUP_MAP` setting) > [Add]
+  10. In *[API permissions]* click button *[☑️ Grant admin conset for ...]*
 
 
 
