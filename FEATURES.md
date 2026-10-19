@@ -51,6 +51,7 @@ Logins are matched case-insensitively by default (`LOGIN_IGNORECASE`): a name en
 - **Legacy**: use native SAML (§1.6) instead for new deployments.
 
 ### 1.5 OpenID Connect (OIDC) Authentication
+- **Site administrators (fork extension)**: optional `OIDC_GROUPS_ADMIN_USERS` promotes matching OIDC users and demotes nonmatching administrators on accepted login. Blocked accounts remain blocked; an empty setting preserves manually assigned roles. It is independent of WARP group mapping and does not itself allow login.
 - When enabled, users are redirected to any OIDC-compliant identity provider (Keycloak, Authentik, Okta, Auth0, Google, Entra ID generic mode, etc.).
 - Configuration is discovery-driven: a single `OIDC_DISCOVERY_URL` loads all endpoints and signing keys from the IdP's `.well-known/openid-configuration`.
 - **Auto-provisioning**: a WARP user account is created automatically on first OIDC login.

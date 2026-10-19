@@ -99,6 +99,7 @@ class DefaultSettings(object):
     OIDC_GROUPS_CLAIM = "groups"
     OIDC_GROUP_MAP = [ [None,None] ]
     OIDC_GROUP_STRICT_MAPPING = False
+    OIDC_GROUPS_ADMIN_USERS = []
     OIDC_EXCLUDED_USERS = []
     OIDC_HTTPS_SCHEME = "https"
     OIDC_USERINFO = False
@@ -343,6 +344,7 @@ _ENV_SETTINGS = {
     "OIDC_GROUPS_CLAIM":          _fmt_str,
     "OIDC_GROUP_MAP":             _fmt_json(_GROUP_MAP),
     "OIDC_GROUP_STRICT_MAPPING":  _fmt_bool,
+    "OIDC_GROUPS_ADMIN_USERS":    _fmt_json(_ARRAY_OF_STRINGS),
     "OIDC_EXCLUDED_USERS":        _fmt_json(_ARRAY_OF_STRINGS),
     "OIDC_HTTPS_SCHEME":          _fmt_str,
     "OIDC_USERINFO":              _fmt_bool,

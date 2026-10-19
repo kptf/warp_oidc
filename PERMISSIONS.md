@@ -47,6 +47,13 @@ person really has in that zone.
 
 ## 2. Account types (global role)
 
+In this fork, a non-empty `OIDC_GROUPS_ADMIN_USERS` makes the IdP group claim
+authoritative for the site role of an admitted OIDC user: match = site admin,
+no match = regular user, synchronized on each OIDC login. Blocked and group
+accounts are preserved. This does not grant login or change zone assignments.
+An empty list disables role synchronization. Other backends and local-password
+exceptions are unaffected. See [OIDC configuration](CONFIGURATION.md#oidc-site-administrators-fork-extension).
+
 | Account type           |      Sign in?       | Admin screens? | Booking ability                                |
 | ---------------------- | :-----------------: | :------------: | ---------------------------------------------- |
 | **Site administrator** |         yes         |      yes       | super-user over every zone & plan (§4)         |

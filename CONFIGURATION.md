@@ -799,6 +799,25 @@ audience, expiry).
 | default value: | `False`                                                                                                                               |
 | description:   | When `True`, WARP also calls the UserInfo endpoint after the ID token is validated and merges the returned claims. Some IdPs only expose groups in the UserInfo response, not in the ID token. |
 
+### OIDC site administrators (fork extension)
+
+`OIDC_GROUPS_ADMIN_USERS` / `WARP_OIDC_GROUPS_ADMIN_USERS` is a JSON array of
+identity-provider group identifiers. Its default, `[]`, disables automatic site
+role synchronization and preserves manually assigned roles.
+
+With a non-empty list, every accepted OIDC login synchronizes the account to
+**site administrator** when any configured identifier matches, otherwise to
+**regular user**. Matches are exact and use the raw claim named by
+`OIDC_GROUPS_CLAIM`, not the mapped WARP group names. Missing/null/malformed group
+claims count as no membership. `"*"` matches every admitted OIDC user.
+Blocked and group accounts are never converted to regular users or admins.
+
+This setting does not grant admission: `OIDC_GROUP_MAP` must still allow login.
+It affects OIDC only, including demotion of manually promoted OIDC users on
+their next login. Local-password exceptions and other auth backends keep their
+existing role behaviour. Ensure Entra emits the complete required group claims;
+group-overage resolution through Microsoft Graph is not implemented.
+
 ### Redirect URI
 
 Register the following redirect URI at your IdP:

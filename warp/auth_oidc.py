@@ -64,6 +64,32 @@ def oidcGetUserMetadata(claims):
     return warp.auth.buildUserMetadata(login, userName, idpGroups, groupMap)
 
 
+def oidcApplyUserMetadata(metadata, claims):
+    """Provision an admitted OIDC user and optionally sync their site role."""
+    config = flask.current_app.config
+    with DB.atomic():
+        login = warp.auth.applyUserMetadata(
+            metadata['login'], metadata,
+            strictMapping=config['OIDC_GROUP_STRICT_MAPPING'],
+            warnPrefix="OIDC")
+
+        admin_groups = config['OIDC_GROUPS_ADMIN_USERS']
+        if admin_groups:
+            idp_groups = claims.get(config['OIDC_GROUPS_CLAIM']) or []
+            # A malformed claim must not grant admin through substring matching.
+            if not isinstance(idp_groups, list):
+                idp_groups = []
+            is_admin = '*' in admin_groups or any(g in idp_groups for g in admin_groups)
+            account_type = ACCOUNT_TYPE_ADMIN if is_admin else ACCOUNT_TYPE_USER
+            Users.update({Users.account_type: account_type}).where(
+                (Users.login == login) &
+                Users.account_type.in_([ACCOUNT_TYPE_ADMIN, ACCOUNT_TYPE_USER])
+            ).execute()
+            # The WHERE guard preserves blocked and group accounts, including
+            # when their IdP membership matches an administrator group.
+    return login
+
+
 # ---------------------------------------------------------------------------
 # Routes
 # ---------------------------------------------------------------------------
@@ -161,11 +187,7 @@ def oidc_callback():
             error="access_denied",
             application_root_uri=app_root_uri)
 
-    strictMapping = config.get('OIDC_GROUP_STRICT_MAPPING', False)
-    login = warp.auth.applyUserMetadata(
-        metadata['login'], metadata,
-        strictMapping=strictMapping,
-        warnPrefix="OIDC")
+    login = oidcApplyUserMetadata(metadata, claims)
 
     flask.session['login'] = login
     flask.session['login_time'] = utils.now(tz="UTC")
