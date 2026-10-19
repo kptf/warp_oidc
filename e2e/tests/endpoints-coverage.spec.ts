@@ -20,6 +20,12 @@ const COVERED_ENDPOINTS: ReadonlySet<string> = new Set([
   '/login',
   '/logout',
 
+  // public legal redirects (including aliases configured by global-setup)
+  '/imprint',
+  '/privacy',
+  '/impressum',
+  '/datenschutz',
+
   // iCal
   '/calendar/<login>/book',
   '/calendar/<login>/delete',

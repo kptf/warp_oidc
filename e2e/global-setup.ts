@@ -93,6 +93,14 @@ export default async function globalSetup() {
     // dropdown; the ical-language spec also switches DEFAULT_LANGUAGE to 'de'.
     '-e', "WARP_LANGUAGES=[\"en\",\"de\"]",
     '-e', 'WARP_DEFAULT_LANGUAGE=en',
+    // Legal links are exercised through the real logged-out UI. Tests intercept
+    // only the external destination page; WARP's redirect itself stays real.
+    '-e', 'WARP_DISPLAY_IMPRINT=true',
+    '-e', 'WARP_DISPLAY_DATA_PRIVACY=true',
+    '-e', 'WARP_IMPRINT_URL=/impressum',
+    '-e', 'WARP_DATA_PRIVACY_URL=/datenschutz',
+    '-e', 'WARP_IMPRINT_REDIRECT_URL=https://legal.example.test/imprint',
+    '-e', 'WARP_DATA_PRIVACY_REDIRECT_URL=https://legal.example.test/privacy',
     IMAGE_TAG,
   ]);
 

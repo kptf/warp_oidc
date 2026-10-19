@@ -8,6 +8,10 @@ here (zone, plan, assignment, …) see [GLOSSARY.md](GLOSSARY.md).
 
 ## 1. The three independent dimensions
 
+The public imprint/privacy redirects (`/imprint`, `/privacy`, and their configured
+aliases) require no session or account role. They expose only operator-configured
+external destinations. The login-page display flags do not restrict route access.
+
 Access is the combination of **three separate things**. Keeping them apart is the
 key to understanding the whole model:
 

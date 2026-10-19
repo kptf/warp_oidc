@@ -265,6 +265,31 @@ Two things must be configured *outside* WARP to match:
 
 ---
 
+## Public legal links (fork extension)
+
+These settings use the normal `WARP_` environment prefix.
+
+| Setting | Default | Purpose |
+| --- | --- | --- |
+| `DISPLAY_IMPRINT` | `False` | Show the imprint link on the standard login page when a destination is configured. |
+| `IMPRINT_URL` | `/imprint` | Optional local alias; `/imprint` remains available. |
+| `IMPRINT_REDIRECT_URL` | empty | Absolute HTTP(S) destination for the imprint redirect. |
+| `DISPLAY_DATA_PRIVACY` | `False` | Show the privacy link when a destination is configured. |
+| `DATA_PRIVACY_URL` | `/privacy` | Optional local alias; `/privacy` remains available. |
+| `DATA_PRIVACY_REDIRECT_URL` | empty | Absolute HTTP(S) destination for the privacy redirect. |
+
+Both redirects and aliases are accessible without login. Unconfigured
+destinations return 404. Display flags control the links, not access to a
+configured redirect. Aliases must be literal local paths without query strings
+or route parameters and must not conflict with other application routes.
+`BASE_PATH` is applied automatically; do not include it in the aliases.
+
+Links use the configured aliases and open the external page in a new tab. The
+labels follow the normal five-locale translation system. With SSO-only OIDC,
+upstream redirects immediately to the IdP, so no WARP login page is displayed;
+the public legal URLs remain accessible. No separate SSO landing/logout page
+is introduced.
+
 ## Booking window
 
 | Variable           | Default | Description                                                                                                                    |

@@ -24,6 +24,14 @@ class DefaultSettings(object):
     # proxy must forward requests with the prefix intact (see CONFIGURATION.md).
     BASE_PATH = ""
 
+    # Public legal redirects and optional links on the standard login page.
+    DISPLAY_IMPRINT = False
+    IMPRINT_URL = "/imprint"
+    IMPRINT_REDIRECT_URL = ""
+    DISPLAY_DATA_PRIVACY = False
+    DATA_PRIVACY_URL = "/privacy"
+    DATA_PRIVACY_REDIRECT_URL = ""
+
     # Stylesheet that defines the colour theme (the --warp-* tokens). Path is
     # relative to the static folder, so the default is served at /static/theme.css.
     # Override with WARP_THEME_FILE to re-skin WARP by pointing at a replacement
@@ -249,6 +257,12 @@ _ENV_SETTINGS = {
     "LANGUAGES":                  _fmt_json(_ARRAY_OF_STRINGS),
     "DEFAULT_LANGUAGE":           _fmt_str,
     "BASE_PATH":                  _fmt_str,
+    "DISPLAY_IMPRINT":            _fmt_bool,
+    "IMPRINT_URL":                _fmt_str,
+    "IMPRINT_REDIRECT_URL":       _fmt_str,
+    "DISPLAY_DATA_PRIVACY":       _fmt_bool,
+    "DATA_PRIVACY_URL":           _fmt_str,
+    "DATA_PRIVACY_REDIRECT_URL":  _fmt_str,
     "THEME_FILE":                 _fmt_str,
     "SESSION_LIFETIME":           _fmt_int,
     "WEEKS_IN_ADVANCE":           _fmt_int,

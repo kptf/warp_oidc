@@ -108,6 +108,9 @@ def create_app():
         from . import debug as debug_mod
         app.register_blueprint(debug_mod.bp)
 
+    from . import public
+    public.init_app(app)
+
     # Themed server-level error pages (404/403/500): without these Flask serves
     # its bare default HTML — no top bar, no theme, no bundle. Render a simple
     # themed card (base.html + public bundle + public_nav.html) so an unknown

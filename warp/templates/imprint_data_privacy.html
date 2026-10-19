@@ -1,0 +1,13 @@
+{% set show_imprint = config['DISPLAY_IMPRINT'] and config['IMPRINT_REDIRECT_URL'] %}
+{% set show_privacy = config['DISPLAY_DATA_PRIVACY'] and config['DATA_PRIVACY_REDIRECT_URL'] %}
+{% if show_imprint or show_privacy %}
+<div class="row center-align">
+    {% if show_imprint %}
+    <a href="{{ url_for('public.imprint') }}" target="_blank" rel="noopener noreferrer" class="TR">Imprint</a>
+    {% endif %}
+    {% if show_imprint and show_privacy %}<span aria-hidden="true"> | </span>{% endif %}
+    {% if show_privacy %}
+    <a href="{{ url_for('public.data_privacy') }}" target="_blank" rel="noopener noreferrer" class="TR">Privacy Notice</a>
+    {% endif %}
+</div>
+{% endif %}

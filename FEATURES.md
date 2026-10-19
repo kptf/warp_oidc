@@ -17,6 +17,7 @@ rendering (§20), and mobile layouts (§21).
 Logins are matched case-insensitively by default (`LOGIN_IGNORECASE`): a name entered in any letter case resolves to the same stored account across every backend, so a case-insensitive directory (e.g. LDAP) cannot create duplicate accounts. The stored login keeps its original case.
 
 ### 1.1 Built-in Authentication (default)
+- **Public legal links (fork extension)**: optionally show translated imprint/privacy links on the standard login page. `/imprint`, `/privacy`, and configured aliases redirect to the company pages without requiring a session. Missing destinations return 404. SSO-only OIDC retains its immediate redirect instead of displaying a custom landing page.
 - Users log in with a **login** and **password** on the login page.
 - Wrong credentials display an error; no detail is given about which field is incorrect (prevents enumeration).
 - A blocked account shows "Your account is blocked" instead of logging in.
