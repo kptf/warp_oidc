@@ -743,6 +743,9 @@ Features: auto-provisioning, display name sync on every login, same group mappin
 model as LDAP, excluded users, ID-token verification (signature, nonce, issuer,
 audience, expiry).
 
+For PostgreSQL + Entra ID + the fork extensions, see the
+[Compose overlay example](containers/compose/compose.oidc.example.yaml).
+
 ### Configuration variables
 
 | variable:      | `AUTH_OIDC`                                         |

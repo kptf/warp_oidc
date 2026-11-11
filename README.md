@@ -2,6 +2,7 @@
 
 This fork adds OIDC administrator-group synchronization and public imprint/privacy links.
 Use `ghcr.io/kptf/warp_oidc`; settings are documented in [CONFIGURATION.md](CONFIGURATION.md).
+The [Entra/OIDC Compose example](containers/compose/compose.oidc.example.yaml) reuses upstream's stack; see its setup comments.
 The examples and Codespaces demo below use upstream images.
 
 # Announcement

@@ -1,0 +1,79 @@
+# Entra/OIDC overlay for upstream's compose.yaml; inherits Caddy, DB storage,
+# database connection settings and the shared /run/warp socket/static volume.
+# Set POSTGRES_IMAGE and absolute DB_PASSWORD_FILE / APP_SECRET_KEY_FILE paths.
+# The optional OIDC secret-file form also needs OIDC_CLIENT_SECRET_FILE.
+# Validate from the repository root (replace config --quiet with up -d to run):
+# docker compose -f containers/compose/compose.yaml -f containers/compose/compose.oidc.example.yaml config --quiet
+# Inherited Caddy serves HTTP on port 8080. Configure HTTPS as in ../README.md,
+# preserving the public Host; register https://warp.example.com/oidc/callback.
+
+services:
+  warp-db:
+    # Upstream production examples do not pin a major. Match an existing DB's
+    # version; review PGDATA/mount layout before reusing or restoring its data.
+    image: ${POSTGRES_IMAGE:?Set an explicit PostgreSQL image matching your database major}
+
+  warp-app:
+    image: ghcr.io/kptf/warp_oidc:latest # Pin a reviewed version/digest for production.
+    environment:
+      # Caddy and WARP communicate through the inherited shared volume.
+      WARPAPP_UWSGI_HTTP_SOCKET: /run/warp/uwsgi-http.sock
+      WARPAPP_UWSGI_SOCKET: ""
+      # Database host/name/user and DATABASE_PASSWORD_FILE/SECRET_KEY_FILE
+      # are inherited from compose.yaml; secret sources are replaced below.
+      WARP_AUTH_OIDC: "true"
+      WARP_OIDC_DISCOVERY_URL: https://login.microsoftonline.com/<tenant-id>/v2.0/.well-known/openid-configuration
+      WARP_OIDC_CLIENT_ID: <client-id>
+      WARP_OIDC_CLIENT_SECRET: <client-secret>
+      # Alternatively: replace the direct value above, enable both secret blocks
+      # below, and set the host's OIDC_CLIENT_SECRET_FILE path:
+      # WARP_OIDC_CLIENT_SECRET_FILE: /run/secrets/warp_oidc_client_secret
+      WARP_OIDC_SCOPES: openid email profile
+      # Preserve email-based identities; display names are a separate claim.
+      WARP_OIDC_LOGIN_ATTRIBUTE: email
+      WARP_OIDC_USER_NAME_ATTRIBUTE: name
+      WARP_OIDC_HTTPS_SCHEME: https
+      # Configure Entra to emit email and complete group object IDs.
+      WARP_OIDC_GROUPS_CLAIM: groups
+      # Admit listed groups; create "employees" in WARP with this exact case.
+      # Adding [null, null] would instead admit every authenticated IdP user.
+      WARP_OIDC_GROUP_MAP: '[["<entra-group-object-id>", "employees"], ["<entra-admin-group-object-id>", null]]'
+      WARP_OIDC_GROUP_STRICT_MAPPING: "true"
+      WARP_OIDC_GROUPS_ADMIN_USERS: '["<entra-admin-group-object-id>"]'
+      # Default [] redirects straight to SSO; legal URLs remain public.
+      # Optional mixed login also shows legal links; secure the local account first:
+      # WARP_OIDC_EXCLUDED_USERS: '["admin"]'
+
+      WARP_DEFAULT_LANGUAGE: de
+      # WARP_LANGUAGES: '["de", "en"]' # Otherwise all five locales remain available.
+
+      # Booking settings
+      WARP_WEEKS_IN_ADVANCE: "13" # Weeks beyond the current week (upstream default: 1).
+
+      # Only Monday-Friday can be selected/booked.
+      # Weekdays: 0=Mon ... 6=Sun
+      WARP_OMITTED_WEEKDAYS: '[5, 6]'
+
+      # Optional booking limits in seconds from midnight, NOT default selections.
+      # WARP_BOOK_OPEN: "28800"  # 08:00; default 0.
+      # WARP_BOOK_CLOSE: "61200" # 17:00; default 86400.
+      # Default selections use personal preferences (fallback 09:00-17:00).
+
+      # Canonical /imprint and /privacy remain public alongside these aliases.
+      # Display flags show links only when the upstream login page is rendered.
+      WARP_DISPLAY_IMPRINT: "true"
+      WARP_IMPRINT_URL: /impressum
+      WARP_IMPRINT_REDIRECT_URL: https://example.com/imprint
+      WARP_DISPLAY_DATA_PRIVACY: "true"
+      WARP_DATA_PRIVACY_URL: /datenschutz
+      WARP_DATA_PRIVACY_REDIRECT_URL: https://example.com/privacy
+    # secrets:
+    #   - warp_oidc_client_secret # Merged with the two upstream app secrets.
+
+secrets:
+  warp_db_password:
+    file: ${DB_PASSWORD_FILE:?Set the absolute path to your database password file}
+  warp_secret_key:
+    file: ${APP_SECRET_KEY_FILE:?Set the absolute path to your application secret key file}
+  # warp_oidc_client_secret:
+  #   file: ${OIDC_CLIENT_SECRET_FILE:?Set the absolute path to your OIDC client secret file}
