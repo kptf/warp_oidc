@@ -101,13 +101,9 @@ cannot log in. Sample data also defines zones 1–3 ("Zone 1", "Zone 2",
 
 ## Conventions for writing new tests
 
-The managed test container enables the legal links with aliases `/impressum` and
-`/datenschutz` and targets `https://legal.example.test/imprint` and `/privacy`.
-`tests/legal.spec.ts` clicks the real login-page links and visits the canonical
-routes without a session. Only the external destination page is intercepted.
-An externally managed `E2E_BASE_URL` must use the same legal settings to run this
-spec and the endpoint inventory. Disabled/missing settings and mount prefixes
-are additionally covered by `tests/test_public.py` in the Python suite.
+`tests/legal.spec.ts` exercises public legal links and redirects in the browser.
+An external `E2E_BASE_URL` must match the legal settings in `global-setup.ts`,
+including aliases and destinations, for this spec and the endpoint inventory.
 
 - One feature area per spec file in `tests/` (e.g. `login.spec.ts`,
   `booking.spec.ts`, `users-admin.spec.ts`).

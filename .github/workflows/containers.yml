@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE: ghcr.io/${{ github.repository_owner }}/warp
+  IMAGE: ghcr.io/${{ github.repository_owner }}/warp_oidc
 
 jobs:
   # Build each image for each architecture on a native runner and push it to
